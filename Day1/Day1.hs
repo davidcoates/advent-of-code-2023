@@ -1,3 +1,8 @@
+module Day1 (
+    runPart1,
+    runPart2
+) where
+
 import Data.List (isPrefixOf)
 import Control.Monad (msum)
 
@@ -15,9 +20,10 @@ recover digits line = firstDigit * 10 + lastDigit where
         Just value -> value
         Nothing    -> getFirstDigit digits (tail line)
 
-part1 = digitLiterals
-part2 = digitLiterals ++ digitNames
-
-main = do
-    answer <- sum . map (recover part2) . lines <$> getContents
+run :: [(String, Int)] -> IO ()
+run digits = do
+    answer <- sum . map (recover digits) . lines <$> getContents
     putStrLn $ show answer
+
+runPart1 = run digitLiterals
+runPart2 = run (digitLiterals ++ digitNames)
