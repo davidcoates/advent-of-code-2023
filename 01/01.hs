@@ -9,16 +9,15 @@ tryMatchPrefix digits line = msum [ if name `isPrefixOf` line then Just value el
 
 recover :: [(String, Int)] -> String -> Int
 recover digits line = firstDigit * 10 + lastDigit where
-    firstDigit = recover' digits line
-    lastDigit  = recover' [ (reverse name, value) | (name, value) <- digits ] (reverse line)
-    recover' digits line = case tryMatchPrefix digits line of
+    firstDigit = getFirstDigit digits line
+    lastDigit  = getFirstDigit [ (reverse name, value) | (name, value) <- digits ] (reverse line)
+    getFirstDigit digits line = case tryMatchPrefix digits line of
         Just value -> value
-        Nothing    -> recover' digits (tail line)
+        Nothing    -> getFirstDigit digits (tail line)
 
 part1 = digitLiterals
 part2 = digitLiterals ++ digitNames
 
 main = do
-    lines <- lines <$> getContents
-    let answer = sum $ map (recover part2) lines
+    answer <- sum . map (recover part2) . lines <$> getContents
     putStrLn $ show answer
