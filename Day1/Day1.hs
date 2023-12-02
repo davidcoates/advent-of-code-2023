@@ -22,7 +22,7 @@ recover digits line = firstDigit * 10 + lastDigit where
 
 run :: [(String, Int)] -> IO ()
 run digits = do
-    answer <- sum . map (recover digits) . lines <$> getContents
+    answer <- sum . map (recover digits) . lines <$> readFile "input.txt"
     putStrLn $ show answer
 
 runPart1 = run digitLiterals
