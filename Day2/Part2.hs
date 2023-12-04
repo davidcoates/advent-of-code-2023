@@ -10,4 +10,4 @@ main :: IO ()
 main = do
   games <- parseGames
   let answer = sum $ power <$> games
-  putStrLn $ show answer
+  print answer

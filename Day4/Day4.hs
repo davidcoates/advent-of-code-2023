@@ -18,5 +18,8 @@ parseCard :: String -> Card
 parseCard line = case runParser card line of
   (Just r, _) -> r
 
+cardMatches :: Card -> Int
+cardMatches Card{ winning, mine } = length (winning `Set.intersection` mine)
+
 parseCards :: IO [Card]
 parseCards = map parseCard . lines <$> readFile "input.txt"

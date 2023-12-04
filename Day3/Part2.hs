@@ -29,4 +29,4 @@ main :: IO ()
 main = do
   grid <- positioned <$> readFile "input.txt"
   let gearRatios = [ a * b | (a, b) <- gears grid ]
-  putStrLn . show . sum $ gearRatios
+  print $ sum gearRatios

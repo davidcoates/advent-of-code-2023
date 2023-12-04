@@ -10,4 +10,4 @@ main :: IO ()
 main = do
   games <- parseGames
   let answer = sum [ id | (id, draws) <- games, all validDraw draws ]
-  putStrLn $ show answer
+  print answer
