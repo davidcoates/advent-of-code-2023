@@ -1,6 +1,6 @@
 module Parser where
 
-import Control.Applicative (Alternative (..))
+import Control.Applicative (Alternative (empty, (<|>)))
 
 newtype Parser a = Parser { runParser :: String -> (Maybe a, String) }
 
@@ -46,11 +46,23 @@ isLower = (`elem` ['a'..'z'])
 isUpper = (`elem` ['A'..'Z'])
 isLetter c = isLower c || isUpper c
 
+char :: Char -> Parser Char
+char c = match (== c)
+
+space :: Parser ()
+space = char ' ' *> pure ()
+
 int :: Parser Int
 int = satisfy isDigit *> (read <$> while isDigit consume)
 
 word :: Parser String
 word = satisfy isLetter *> while isLetter consume
 
+many :: Parser a -> Parser [a]
+many p = (:) <$> p <*> many p <|> pure []
+
+some :: Parser a -> Parser [a]
+some p = (:) <$> p <*> many p
+
 sepBy :: Parser a -> Parser b -> Parser [a]
-sepBy p sep = (:) <$> p <*> (sep *> sepBy p sep <|> pure [])
+sepBy p sep = (:) <$> p <*> many (sep *> p)
