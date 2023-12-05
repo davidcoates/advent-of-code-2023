@@ -52,6 +52,12 @@ char c = match (== c)
 space :: Parser ()
 space = char ' ' *> pure ()
 
+newline :: Parser ()
+newline = char '\n' *> pure ()
+
+line :: Parser ()
+line = many (match (/= '\n')) *> newline
+
 int :: Parser Int
 int = satisfy isDigit *> (read <$> while isDigit consume)
 
