@@ -1,4 +1,7 @@
-module Parser where
+module Parser (
+  module Parser,
+  module Control.Applicative
+) where
 
 import Control.Applicative (Alternative (empty, (<|>)))
 
