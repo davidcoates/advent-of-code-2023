@@ -64,6 +64,9 @@ line = many (match (/= '\n')) *> newline
 int :: Parser Int
 int = satisfy isDigit *> (read <$> while isDigit consume)
 
+integer :: Parser Integer
+integer = satisfy isDigit *> (read <$> while isDigit consume)
+
 word :: Parser String
 word = satisfy isLetter *> while isLetter consume
 
