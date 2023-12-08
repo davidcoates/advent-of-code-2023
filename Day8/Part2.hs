@@ -10,12 +10,9 @@ steps node (d:ds) branches
   | isEnding node = 0
   | otherwise = 1 + steps (next branches d node) ds branches
 
-
 main = do
   (directions, branches) <- parseNetwork
   let numSteps = foldl lcm 1 numStepsPerNode
-      numStepsPerNode = map (\node -> steps node (cycle directions) branches) (filter isStarting (Map.keys branches))
+      numStepsPerNode = map (\node -> steps node (cycle directions) branches) startingNodes
+      startingNodes = filter isStarting (Map.keys branches)
   print numSteps
-
-
-

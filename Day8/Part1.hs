@@ -11,6 +11,3 @@ main = do
   (directions, branches) <- parseNetwork
   let numSteps = steps "AAA" "ZZZ" (cycle directions) branches
   print numSteps
-
-
-
