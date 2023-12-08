@@ -15,8 +15,7 @@ races = zipWith (\time record -> Race {time, record}) <$> (times <* newline) <*>
 parseRaces :: IO [Race]
 parseRaces = do
   text <- readFile "input.txt"
-  return $ case runParser races text of
-    (Just r, _) -> r
+  return $ forceParse races text
 
 main :: IO ()
 main = do

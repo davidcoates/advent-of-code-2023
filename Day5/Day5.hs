@@ -50,5 +50,4 @@ almanac = (\seeds maps -> Almanac { seeds, maps }) <$> (matches "seeds: " *> int
 parseAlmanac :: IO Almanac
 parseAlmanac = do
   text <- readFile "input.txt"
-  return $ case runParser almanac text of
-    (Just r, _) -> r
+  return (forceParse almanac text)

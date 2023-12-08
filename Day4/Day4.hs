@@ -14,12 +14,8 @@ card = (\winning mine -> Card { winning, mine }) <$> (matches "Card" *> some spa
   ints :: Parser (Set Int)
   ints = Set.fromList <$> (many space *> many (int <* many space))
 
-parseCard :: String -> Card
-parseCard line = case runParser card line of
-  (Just r, _) -> r
-
 cardMatches :: Card -> Int
 cardMatches Card{ winning, mine } = length (winning `Set.intersection` mine)
 
 parseCards :: IO [Card]
-parseCards = map parseCard . lines <$> readFile "input.txt"
+parseCards = map (forceParse card) . lines <$> readFile "input.txt"

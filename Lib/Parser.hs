@@ -7,6 +7,10 @@ import Control.Applicative (Alternative (empty, (<|>)))
 
 newtype Parser a = Parser { runParser :: String -> (Maybe a, String) }
 
+forceParse :: Parser a -> String -> a
+forceParse p text = case runParser p text of
+  (Just r, []) -> r
+
 instance Functor Parser where
   fmap f p = Parser $ \cs -> let (r, cs') = runParser p cs in (f <$> r, cs')
 
@@ -48,6 +52,7 @@ isDigit = (`elem` ['0'..'9'])
 isLower = (`elem` ['a'..'z'])
 isUpper = (`elem` ['A'..'Z'])
 isLetter c = isLower c || isUpper c
+isAlphaNum c = isLetter c || isDigit c
 
 char :: Char -> Parser Char
 char c = match (== c)

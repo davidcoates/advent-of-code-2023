@@ -46,10 +46,7 @@ hand = (,) <$> (Hand <$> many card) <*> (space *> integer)
 parseHands :: IO [(Hand, Integer)]
 parseHands = do
   text <- readFile "input.txt"
-  return $ map parseHand (lines text) where
-    parseHand :: String -> (Hand, Integer)
-    parseHand line = case runParser hand line of
-      (Just r, []) -> r
+  return $ map (forceParse hand) (lines text)
 
 run :: (Hand -> Hand -> Ordering) -> IO ()
 run compare = do

@@ -25,9 +25,5 @@ type Game = (Int, [Draw])
 game :: Parser Game
 game = (,) <$> (matches "Game " *> int <* matches ": ") <*> draw `sepBy` matches "; "
 
-parseGame :: String -> Game
-parseGame line = case runParser game line of
-  (Just r, []) -> r
-
 parseGames :: IO [Game]
-parseGames = map parseGame . lines <$> readFile "input.txt"
+parseGames = map (forceParse game) . lines <$> readFile "input.txt"
