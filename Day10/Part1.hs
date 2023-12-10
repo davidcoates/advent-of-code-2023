@@ -2,5 +2,5 @@ import Day10
 
 main = do
   (start, grid) <- parseGrid
-  print $ loopLength start grid `div` 2
-
+  let loop = traverseLoop start grid
+  print $ length loop `div` 2

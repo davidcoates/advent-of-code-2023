@@ -1,4 +1,4 @@
 #!/bin/bash
 
 ghc -o Part1 Part1.hs -i. -i../Lib
-#ghc -o Part2 Part2.hs -i. -i../Lib
+ghc -o Part2 Part2.hs -i. -i../Lib
