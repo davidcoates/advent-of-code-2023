@@ -18,3 +18,6 @@ parseHistories :: IO [History]
 parseHistories = do
   text <- readFile "input.txt"
   return $ map parseHistory (lines text)
+
+extrapolate history = sum $ map last (differences history)
+
