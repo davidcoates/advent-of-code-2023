@@ -60,6 +60,9 @@ char c = match (== c)
 space :: Parser ()
 space = char ' ' *> pure ()
 
+comma :: Parser ()
+comma = char ',' *> pure ()
+
 newline :: Parser ()
 newline = char '\n' *> pure ()
 
